@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Scouts | Arşiv</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #050810 0%, #0a1628 25%, #0d1a30 50%, #0a1628 75%, #050810 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #fff;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Animated Background Effects */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .gradient-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255, 152, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 87, 34, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(30, 136, 229, 0.04) 0%, transparent 60%);
+        }
+
+        .grid-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255, 152, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255, 152, 0, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.3), transparent);
+            animation: scanMove 8s linear infinite;
+        }
+
+        @keyframes scanMove {
+            0% { top: -2px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 50px 24px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .logo-hex {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-hex::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 87, 34, 0.2));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border: 2px solid rgba(255, 152, 0, 0.5);
+        }
+
+        .logo-hex::after {
+            content: '';
+            position: absolute;
+            width: 85%;
+            height: 85%;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            box-shadow: 0 0 30px rgba(255, 152, 0, 0.5);
+        }
+
+        .logo-icon {
+            position: relative;
+            z-index: 1;
+            font-size: 28px;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 50%, #ff9800 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 40px rgba(255, 152, 0, 0.3);
+        }
+
+        .tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 152, 0, 0.7);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .header-line {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff9800, transparent);
+            margin: 20px auto 0;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 152, 0, 0.05);
+            border: 1px solid rgba(255, 152, 0, 0.1);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .stats-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.5), transparent);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #ff9800;
+            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        /* Section Title */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 87, 34, 0.1));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ff9800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 152, 0, 0.3), transparent);
+        }
+
+        /* Search Box */
+        .search-container {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: rgba(255, 152, 0, 0.05);
+            border: 1px solid rgba(255, 152, 0, 0.15);
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-box:focus {
+            border-color: rgba(255, 152, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 152, 0, 0.5);
+            font-size: 16px;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 152, 0, 0.2);
+            border: none;
+            color: #ff9800;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .search-clear:hover {
+            background: rgba(255, 152, 0, 0.4);
+        }
+
+        .search-clear.visible {
+            display: flex;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            display: none;
+        }
+
+        .no-results.visible {
+            display: block;
+        }
+
+        .no-results span {
+            color: #ff9800;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .page-info {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            color: rgba(255, 152, 0, 0.6);
+            letter-spacing: 1px;
+            margin-right: 12px;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            background: rgba(255, 152, 0, 0.05);
+            clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+            color: rgba(255, 152, 0, 0.7);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            background: rgba(255, 152, 0, 0.15);
+            color: #ff9800;
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Player List */
+        .player-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .player-card {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.03), rgba(13, 26, 48, 0.8));
+            border: 1px solid rgba(255, 152, 0, 0.1);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-card.visible {
+            display: flex;
+            animation: cardSlide 0.5s ease forwards;
+        }
+
+        @keyframes cardSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff9800, #ff5722);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .player-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .player-card:hover {
+            border-color: rgba(255, 152, 0, 0.4);
+            transform: translateX(8px);
+            box-shadow: 0 8px 32px rgba(255, 152, 0, 0.15);
+        }
+
+        .player-card:hover::before {
+            opacity: 1;
+        }
+
+        .player-card:hover::after {
+            opacity: 1;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .player-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 87, 34, 0.1));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ff9800;
+        }
+
+        .player-name {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .x-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(29, 155, 240, 0.15);
+            border: 1px solid rgba(29, 155, 240, 0.3);
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            color: #1d9bf0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .player-card:hover .x-badge {
+            background: rgba(29, 155, 240, 0.25);
+            border-color: rgba(29, 155, 240, 0.5);
+            box-shadow: 0 0 15px rgba(29, 155, 240, 0.3);
+        }
+
+        .x-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 152, 0, 0.1);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff9800, transparent);
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(13, 26, 48, 0.8));
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            border-color: rgba(255, 152, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(255, 152, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .social-btn svg {
+            width: 20px;
+            height: 20px;
+            color: #ff9800;
+        }
+
+        .copyright {
+            margin-top: 24px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .logo-text {
+                font-size: 24px;
+                letter-spacing: 2px;
+            }
+
+            .stats-bar {
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .stat-value {
+                font-size: 22px;
+            }
+
+            .player-card {
+                padding: 14px 18px;
+            }
+
+            .player-name {
+                font-size: 13px;
+            }
+        }
+
+        /* Animation delays for cards */
+        .player-card:nth-child(1) { animation-delay: 0.05s; }
+        .player-card:nth-child(2) { animation-delay: 0.1s; }
+        .player-card:nth-child(3) { animation-delay: 0.15s; }
+        .player-card:nth-child(4) { animation-delay: 0.2s; }
+        .player-card:nth-child(5) { animation-delay: 0.25s; }
+        .player-card:nth-child(6) { animation-delay: 0.3s; }
+        .player-card:nth-child(7) { animation-delay: 0.35s; }
+        .player-card:nth-child(8) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="gradient-orbs"></div>
+        <div class="grid-pattern"></div>
+        <div class="scan-line"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-hex">
+                    <span class="logo-icon">⚽</span>
+                </div>
+                <div class="logo-text">ReportScouts</div>
+            </div>
+            <p class="tagline">Oyuncu Analiz Arşivi</p>
+            <div class="header-line"></div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalPlayers">5</div>
+                <div class="stat-label">Analiz</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">2025</div>
+                <div class="stat-label">Sezon</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">∞</div>
+                <div class="stat-label">Veri</div>
+            </div>
+        </div>
+
+        <!-- Section Header -->
+        <div class="section-header">
+            <div class="section-icon">📊</div>
+            <span class="section-title">Flood Arşivi</span>
+            <div class="section-line"></div>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-box" id="searchInput" placeholder="Oyuncu ara...">
+            <button class="search-clear" id="searchClear">✕</button>
+        </div>
+
+        <!-- No Results -->
+        <div class="no-results" id="noResults">
+            Aramanızla eşleşen oyuncu bulunamadı: <span id="searchTerm"></span>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <span class="page-info" id="pageInfo">1-5 / 5</span>
+            <div id="pageButtons"></div>
+        </div>
+
+        <!-- Player List -->
+        <div class="player-list" id="playerList">
+            
+            <a href="https://x.com/reportscouts/status/2006310512565400021" target="_blank" class="player-card" data-index="0">
+                <div class="player-info">
+                    <div class="player-number">01</div>
+                    <span class="player-name">Manuel Ugarte Ribeiro (24)</span>
+                </div>
+                <div class="x-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Görüntüle
+                </div>
+            </a>
+            
+            <a href="https://x.com/reportscouts/status/2006328015966409121" target="_blank" class="player-card" data-index="1">
+                <div class="player-info">
+                    <div class="player-number">02</div>
+                    <span class="player-name">Christopher Nkunku (27)</span>
+                </div>
+                <div class="x-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Görüntüle
+                </div>
+            </a>
+
+            <a href="https://x.com/reportscouts/status/2006352636501520497" target="_blank" class="player-card" data-index="2">
+                <div class="player-info">
+                    <div class="player-number">03</div>
+                    <span class="player-name">Hakan Çalhanoğlu (31)</span>
+                </div>
+                <div class="x-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Görüntüle
+                </div>
+            </a>
+
+            <a href="https://x.com/reportscouts/status/2006364722803753343" target="_blank" class="player-card" data-index="3">
+                <div class="player-info">
+                    <div class="player-number">04</div>
+                    <span class="player-name">Quinten Timber (24)</span>
+                </div>
+                <div class="x-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Görüntüle
+                </div>
+            </a>
+
+            <a href="https://x.com/reportscouts/status/2006379828023611810" target="_blank" class="player-card" data-index="4">
+                <div class="player-info">
+                    <div class="player-number">05</div>
+                    <span class="player-name">Çalhanoğlu vs Ugarte</span>
+                </div>
+                <div class="x-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Görüntüle
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <a href="https://x.com/reportscouts" target="_blank" class="social-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @REPORTSCOUTS
+            </a>
+            <p class="copyright">© 2025 REPORT SCOUTS • VERİ ODAKLI ANALİZ</p>
+        </footer>
+    </div>
+
+    <script>
+        const ITEMS_PER_PAGE = 15;
+        let currentPage = 1;
+        let filteredPlayers = [];
+
+        const allPlayers = document.querySelectorAll('.player-card');
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
+        const noResults = document.getElementById('noResults');
+        const searchTerm = document.getElementById('searchTerm');
+
+        // Update total count
+        document.getElementById('totalPlayers').textContent = allPlayers.length;
+
+        function getFilteredPlayers() {
+            const query = searchInput.value.toLowerCase().trim();
+            if (!query) {
+                return Array.from(allPlayers);
+            }
+            return Array.from(allPlayers).filter(player => {
+                const name = player.querySelector('.player-name').textContent.toLowerCase();
+                return name.includes(query);
+            });
+        }
+
+        function renderPagination() {
+            const container = document.getElementById('pageButtons');
+            container.innerHTML = '';
+            
+            const totalPages = Math.ceil(filteredPlayers.length / ITEMS_PER_PAGE);
+            
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+                btn.textContent = i;
+                btn.onclick = () => goToPage(i);
+                container.appendChild(btn);
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+
+            // Hide all players first
+            allPlayers.forEach(player => {
+                player.classList.remove('visible');
+            });
+
+            // Show filtered players for current page
+            filteredPlayers.forEach((player, index) => {
+                if (index >= start && index < end) {
+                    setTimeout(() => {
+                        player.classList.add('visible');
+                    }, (index - start) * 50);
+                }
+            });
+
+            const displayEnd = Math.min(end, filteredPlayers.length);
+            document.getElementById('pageInfo').textContent = filteredPlayers.length > 0 
+                ? `${start + 1}-${displayEnd} / ${filteredPlayers.length}`
+                : '0 / 0';
+
+            document.querySelectorAll('.page-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i + 1 === page);
+            });
+        }
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            
+            // Toggle clear button
+            searchClear.classList.toggle('visible', query.length > 0);
+            
+            // Get filtered players
+            filteredPlayers = getFilteredPlayers();
+            
+            // Show/hide no results message
+            if (query && filteredPlayers.length === 0) {
+                noResults.classList.add('visible');
+                searchTerm.textContent = query;
+            } else {
+                noResults.classList.remove('visible');
+            }
+            
+            // Reset to page 1 and render
+            currentPage = 1;
+            renderPagination();
+            goToPage(1);
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', performSearch);
+        
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            performSearch();
+            searchInput.focus();
+        });
+
+        // Initialize
+        filteredPlayers = getFilteredPlayers();
+        renderPagination();
+        goToPage(1);
+
+        // ============ KORUMA ÖNLEMLERİ ============
+        
+        // Sağ tık engelle
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Kopyalama engelle
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Kesme engelle
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Seçim engelle
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Klavye kısayolları engelle (F12, Ctrl+U, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+S)
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (kaynak kodu)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I (DevTools)
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+C (Element seçici)
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+S (Kaydet)
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // DevTools açık mı kontrol (basit)
+        (function() {
+            const threshold = 160;
+            setInterval(function() {
+                if (window.outerWidth - window.innerWidth > threshold || 
+                    window.outerHeight - window.innerHeight > threshold) {
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#ff9800;font-family:Orbitron,sans-serif;font-size:24px;text-align:center;padding:20px;">⚠️ DevTools Algılandı<br><small style="font-size:14px;color:#666;margin-top:10px;display:block;">© 2025 ReportScouts - Tüm hakları saklıdır</small></div>';
+                }
+            }, 1000);
+        })();
+
+        console.log('%c⚠️ DUR!', 'color: red; font-size: 50px; font-weight: bold;');
+        console.log('%c© 2025 ReportScouts - Bu tasarım telif hakkı ile korunmaktadır.', 'color: #ff9800; font-size: 16px;');
+    </script>
+</body>
+</html>
