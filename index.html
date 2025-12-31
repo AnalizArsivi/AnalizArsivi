@@ -886,17 +886,7 @@
             }
         });
 
-        // DevTools açık mı kontrol (basit)
-        (function() {
-            const threshold = 160;
-            setInterval(function() {
-                if (window.outerWidth - window.innerWidth > threshold || 
-                    window.outerHeight - window.innerHeight > threshold) {
-                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#ff9800;font-family:Orbitron,sans-serif;font-size:24px;text-align:center;padding:20px;">⚠️ DevTools Algılandı<br><small style="font-size:14px;color:#666;margin-top:10px;display:block;">© 2025 ReportScouts - Tüm hakları saklıdır</small></div>';
-                }
-            }, 1000);
-        })();
-
+        // Console uyarı mesajı
         console.log('%c⚠️ DUR!', 'color: red; font-size: 50px; font-weight: bold;');
         console.log('%c© 2025 ReportScouts - Bu tasarım telif hakkı ile korunmaktadır.', 'color: #ff9800; font-size: 16px;');
     </script>
