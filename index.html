@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report Scouts | Arşiv</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,137 +14,283 @@
         }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: #000;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #050810 0%, #0a1628 25%, #0d1a30 50%, #0a1628 75%, #050810 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            color: #fff;
         }
 
-        .bg-gradient {
+        /* Animated Background Effects */
+        .bg-effects {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(0, 255, 135, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 200, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(120, 0, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
             z-index: 0;
         }
 
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
-            z-index: 1;
-            pointer-events: none;
+        .gradient-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255, 152, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 87, 34, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(30, 136, 229, 0.04) 0%, transparent 60%);
         }
 
+        .grid-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255, 152, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255, 152, 0, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.3), transparent);
+            animation: scanMove 8s linear infinite;
+        }
+
+        @keyframes scanMove {
+            0% { top: -2px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Container */
         .container {
             position: relative;
             z-index: 2;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 60px 24px;
+            padding: 50px 24px;
         }
 
+        /* Header */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            position: relative;
         }
 
-        .logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .logo-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #00ff87, #00d4ff);
-            border-radius: 16px;
+        .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .logo-hex {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-hex::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 87, 34, 0.2));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border: 2px solid rgba(255, 152, 0, 0.5);
+        }
+
+        .logo-hex::after {
+            content: '';
+            position: absolute;
+            width: 85%;
+            height: 85%;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            box-shadow: 0 0 30px rgba(255, 152, 0, 0.5);
+        }
+
+        .logo-icon {
+            position: relative;
+            z-index: 1;
             font-size: 28px;
-            box-shadow: 0 8px 32px rgba(0, 255, 135, 0.3);
         }
 
         .logo-text {
-            font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 50%, #ff9800 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 40px rgba(255, 152, 0, 0.3);
         }
 
         .tagline {
-            color: #666;
-            font-size: 15px;
-            letter-spacing: 0.5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 152, 0, 0.7);
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
 
+        .header-line {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff9800, transparent);
+            margin: 20px auto 0;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 152, 0, 0.05);
+            border: 1px solid rgba(255, 152, 0, 0.1);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .stats-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.5), transparent);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #ff9800;
+            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        /* Section Title */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 87, 34, 0.1));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ff9800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 152, 0, 0.3), transparent);
+        }
+
+        /* Pagination */
         .pagination {
             display: flex;
             align-items: center;
             justify-content: flex-end;
             gap: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+        }
+
+        .page-info {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            color: rgba(255, 152, 0, 0.6);
+            letter-spacing: 1px;
+            margin-right: 12px;
         }
 
         .page-btn {
             width: 36px;
             height: 36px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            color: #666;
-            font-size: 14px;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            background: rgba(255, 152, 0, 0.05);
+            clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+            color: rgba(255, 152, 0, 0.7);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
+            transition: all 0.3s;
         }
 
         .page-btn:hover {
-            border-color: rgba(0, 255, 135, 0.3);
-            color: #fff;
+            background: rgba(255, 152, 0, 0.15);
+            color: #ff9800;
         }
 
         .page-btn.active {
-            background: linear-gradient(135deg, #00ff87, #00d4ff);
+            background: linear-gradient(135deg, #ff9800, #ff5722);
             border-color: transparent;
             color: #000;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
         }
 
-        .page-info {
-            color: #444;
-            font-size: 13px;
-            margin-right: 12px;
-        }
-
+        /* Player List */
         .player-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .player-link {
+        .player-card {
             display: none;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.03), rgba(13, 26, 48, 0.8));
+            border: 1px solid rgba(255, 152, 0, 0.1);
+            border-radius: 8px;
             text-decoration: none;
             color: #fff;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -152,36 +298,58 @@
             overflow: hidden;
         }
 
-        .player-link.visible {
+        .player-card.visible {
             display: flex;
-            animation: fadeUp 0.4s ease forwards;
+            animation: cardSlide 0.5s ease forwards;
         }
 
-        .player-link::before {
+        @keyframes cardSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff9800, #ff5722);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .player-card::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 135, 0.1), rgba(0, 200, 255, 0.05));
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .player-link:hover {
-            border-color: rgba(0, 255, 135, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 255, 135, 0.15);
+        .player-card:hover {
+            border-color: rgba(255, 152, 0, 0.4);
+            transform: translateX(8px);
+            box-shadow: 0 8px 32px rgba(255, 152, 0, 0.15);
         }
 
-        .player-link:hover::before {
+        .player-card:hover::before {
             opacity: 1;
         }
 
-        .player-link.coming-soon {
-            opacity: 0.4;
-            pointer-events: none;
+        .player-card:hover::after {
+            opacity: 1;
         }
 
         .player-info {
@@ -193,193 +361,264 @@
         }
 
         .player-number {
-            width: 32px;
-            height: 32px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 87, 34, 0.1));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
-            font-weight: 600;
-            color: #00ff87;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ff9800;
         }
 
         .player-name {
-            font-size: 17px;
-            font-weight: 500;
-            letter-spacing: -0.3px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .x-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
+            gap: 8px;
+            padding: 8px 16px;
             background: rgba(29, 155, 240, 0.15);
-            border-radius: 20px;
-            font-size: 12px;
+            border: 1px solid rgba(29, 155, 240, 0.3);
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
             color: #1d9bf0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             position: relative;
             z-index: 1;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
 
-        .player-link:hover .x-badge {
+        .player-card:hover .x-badge {
             background: rgba(29, 155, 240, 0.25);
-            color: #fff;
+            border-color: rgba(29, 155, 240, 0.5);
+            box-shadow: 0 0 15px rgba(29, 155, 240, 0.3);
         }
 
         .x-badge svg {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
         }
 
-        .x-badge.soon {
-            background: rgba(255, 255, 255, 0.05);
-            color: #666;
-        }
-
+        /* Footer */
         .footer {
             margin-top: 60px;
             text-align: center;
             padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 152, 0, 0.1);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff9800, transparent);
         }
 
         .social-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
-            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(13, 26, 48, 0.8));
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            border-radius: 8px;
             color: #fff;
             text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
             transition: all 0.3s;
         }
 
         .social-btn:hover {
-            border-color: rgba(0, 255, 135, 0.5);
-            box-shadow: 0 8px 32px rgba(0, 255, 135, 0.2);
+            border-color: rgba(255, 152, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(255, 152, 0, 0.2);
+            transform: translateY(-2px);
         }
 
         .social-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
+            color: #ff9800;
         }
 
         .copyright {
             margin-top: 24px;
-            color: #333;
-            font-size: 12px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        /* Responsive */
+        @media (max-width: 600px) {
+            .logo-text {
+                font-size: 24px;
+                letter-spacing: 2px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .stats-bar {
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .stat-value {
+                font-size: 22px;
+            }
+
+            .player-card {
+                padding: 14px 18px;
+            }
+
+            .player-name {
+                font-size: 13px;
             }
         }
 
-        .header {
-            animation: fadeUp 0.6s ease forwards;
-        }
-
-        .footer {
-            animation: fadeUp 0.6s ease 0.3s forwards;
-            opacity: 0;
-        }
+        /* Animation delays for cards */
+        .player-card:nth-child(1) { animation-delay: 0.05s; }
+        .player-card:nth-child(2) { animation-delay: 0.1s; }
+        .player-card:nth-child(3) { animation-delay: 0.15s; }
+        .player-card:nth-child(4) { animation-delay: 0.2s; }
+        .player-card:nth-child(5) { animation-delay: 0.25s; }
+        .player-card:nth-child(6) { animation-delay: 0.3s; }
+        .player-card:nth-child(7) { animation-delay: 0.35s; }
+        .player-card:nth-child(8) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-    <div class="noise"></div>
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="gradient-orbs"></div>
+        <div class="grid-pattern"></div>
+        <div class="scan-line"></div>
+    </div>
 
     <div class="container">
+        <!-- Header -->
         <header class="header">
-            <div class="logo">
-                <div class="logo-icon">⚽</div>
+            <div class="logo-container">
+                <div class="logo-hex">
+                    <span class="logo-icon">⚽</span>
+                </div>
                 <div class="logo-text">ReportScouts</div>
             </div>
             <p class="tagline">Oyuncu Analiz Arşivi</p>
+            <div class="header-line"></div>
         </header>
 
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalPlayers">5</div>
+                <div class="stat-label">Analiz</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">2025</div>
+                <div class="stat-label">Sezon</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">∞</div>
+                <div class="stat-label">Veri</div>
+            </div>
+        </div>
+
+        <!-- Section Header -->
+        <div class="section-header">
+            <div class="section-icon">📊</div>
+            <span class="section-title">Flood Arşivi</span>
+            <div class="section-line"></div>
+        </div>
+
+        <!-- Pagination -->
         <div class="pagination">
-            <span class="page-info" id="pageInfo">1-9 / 9</span>
+            <span class="page-info" id="pageInfo">1-5 / 5</span>
             <div id="pageButtons"></div>
         </div>
 
+        <!-- Player List -->
         <div class="player-list" id="playerList">
             
-            <a href="https://x.com/reportscouts/status/2006310512565400021" target="_blank" class="player-link" data-index="0">
+            <a href="https://x.com/reportscouts/status/2006310512565400021" target="_blank" class="player-card" data-index="0">
                 <div class="player-info">
                     <div class="player-number">01</div>
-                    <span class="player-name"> Manuel Ugarte Ribeiro (24)</span>
+                    <span class="player-name">Manuel Ugarte Ribeiro (24)</span>
                 </div>
                 <div class="x-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    Göster
+                    Görüntüle
                 </div>
             </a>
             
-            <a href="https://x.com/reportscouts/status/2006328015966409121?s=20" target="_blank" class="player-link" data-index="1">
+            <a href="https://x.com/reportscouts/status/2006328015966409121" target="_blank" class="player-card" data-index="1">
                 <div class="player-info">
                     <div class="player-number">02</div>
-                    <span class="player-name">Christopher Alan Nkunku (28) </span>
+                    <span class="player-name">Christopher Nkunku (27)</span>
                 </div>
                 <div class="x-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    Göster
+                    Görüntüle
                 </div>
             </a>
 
-            <a href="https://x.com/reportscouts/status/2006352636501520497?s=20" target="_blank" class="player-link" data-index="2">
+            <a href="https://x.com/reportscouts/status/2006352636501520497" target="_blank" class="player-card" data-index="2">
                 <div class="player-info">
                     <div class="player-number">03</div>
-                    <span class="player-name">Hakan Çalhanoğlu (31) </span>
+                    <span class="player-name">Hakan Çalhanoğlu (31)</span>
                 </div>
                 <div class="x-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    Göster
+                    Görüntüle
                 </div>
             </a>
 
-            <a href="https://x.com/reportscouts/status/2006364722803753343?s=20" target="_blank" class="player-link" data-index="3">
+            <a href="https://x.com/reportscouts/status/2006364722803753343" target="_blank" class="player-card" data-index="3">
                 <div class="player-info">
                     <div class="player-number">04</div>
-                    <span class="player-name">Quinten Ryan Crispito Timber (24) </span>
+                    <span class="player-name">Quinten Timber (24)</span>
                 </div>
                 <div class="x-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    Göster
+                    Görüntüle
                 </div>
             </a>
-            <a href="https://x.com/reportscouts/status/2006379828023611810?s=20" target="_blank" class="player-link" data-index="3">
+
+            <a href="https://x.com/reportscouts/status/2006379828023611810" target="_blank" class="player-card" data-index="4">
                 <div class="player-info">
-                    <div class="player-number">04</div>
-                    <span class="player-name">Hakan Çalhanoğlu (31) VS Manuel Ugarte Ribeiro (24) </span>
+                    <div class="player-number">05</div>
+                    <span class="player-name">Çalhanoğlu vs Ugarte</span>
                 </div>
                 <div class="x-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    Göster
+                    Görüntüle
                 </div>
             </a>
+
         </div>
 
+        <!-- Footer -->
         <footer class="footer">
             <a href="https://x.com/reportscouts" target="_blank" class="social-btn">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                @reportscouts
+                @REPORTSCOUTS
             </a>
-            <p class="copyright">© 2025 ReportScouts</p>
+            <p class="copyright">© 2025 REPORT SCOUTS • VERİ ODAKLI ANALİZ</p>
         </footer>
     </div>
 
@@ -387,9 +626,12 @@
         const ITEMS_PER_PAGE = 15;
         let currentPage = 1;
 
-        const players = document.querySelectorAll('.player-link');
+        const players = document.querySelectorAll('.player-card');
         const totalPlayers = players.length;
         const totalPages = Math.ceil(totalPlayers / ITEMS_PER_PAGE);
+
+        // Update total count
+        document.getElementById('totalPlayers').textContent = totalPlayers;
 
         function renderPagination() {
             const container = document.getElementById('pageButtons');
@@ -410,10 +652,11 @@
             const end = start + ITEMS_PER_PAGE;
 
             players.forEach((player, index) => {
+                player.classList.remove('visible');
                 if (index >= start && index < end) {
-                    player.classList.add('visible');
-                } else {
-                    player.classList.remove('visible');
+                    setTimeout(() => {
+                        player.classList.add('visible');
+                    }, (index - start) * 50);
                 }
             });
 
@@ -432,6 +675,3 @@
     </script>
 </body>
 </html>
-
-
-
